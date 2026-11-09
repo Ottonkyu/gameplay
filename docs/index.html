@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GamePlay — marque partidas com seu squad</title>
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<meta name="description" content="App para marcar partidas de jogos online com seu squad. Baixe o APK para Android.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#1A0F2E; --card:#221640; --line:#3A2A5C; --text:#FFF6E0; --muted:#CFC3E8; --dim:#A99BC7; --accent:#FFD23F; --pink:#E0457B; --cyan:#3DDCFF; --green:#7CFF6B; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Press Start 2P', monospace; line-height: 1.9; }
+  body::after { content: ''; position: fixed; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0,0,0,.22) 0 2px, transparent 2px 4px); }
+  main { max-width: 760px; margin: 0 auto; padding: 48px 16px 64px; display: flex; flex-direction: column; gap: 40px; }
+  .logo { text-align: center; font-size: clamp(32px, 9vw, 56px); line-height: 1.3; }
+  .logo span { display: block; }
+  .logo .a { color: var(--accent); text-shadow: 5px 5px 0 var(--pink); }
+  .logo .b { color: var(--text); text-shadow: 5px 5px 0 var(--cyan); }
+  p { margin: 0; font-size: 11px; color: var(--muted); text-align: center; }
+  .btn { display: block; text-align: center; padding: 22px 16px; font-size: 14px; color: var(--bg); background: var(--accent); border: 4px solid var(--text); box-shadow: 6px 6px 0 var(--pink); text-decoration: none; }
+  .btn:active { transform: translate(4px, 4px); box-shadow: none; }
+  .btn:focus-visible { outline: 3px dashed var(--cyan); outline-offset: 4px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+  .card { background: var(--card); border: 3px solid var(--line); padding: 16px; }
+  .card h3 { margin: 0 0 10px; font-size: 10px; color: var(--accent); font-weight: 400; }
+  .card p { text-align: left; font-size: 8px; }
+  h2 { font-size: 12px; font-weight: 400; margin: 0 0 14px; }
+  ol { margin: 0; padding-left: 22px; font-size: 9px; color: var(--muted); display: flex; flex-direction: column; gap: 12px; }
+  .note { font-size: 8px; color: var(--dim); text-align: left; }
+  footer { font-size: 7px; color: var(--dim); text-align: center; }
+</style>
+</head>
+<body>
+<main>
+  <img src="icon.png" alt="" width="96" height="96" style="display:block;margin:0 auto;image-rendering:pixelated;border-radius:22px">
+  <div class="logo"><span class="a">GAME</span><span class="b">PLAY</span></div>
+  <p>MONTE SEU SQUAD, MARQUE A PARTIDA E JOGUE NA HORA CERTA.</p>
+
+  <!-- Troque o link pelo do seu repositório: o arquivo do release precisa se chamar gameplay.apk -->
+  <a class="btn" href="https://github.com/Ottonkyu/gameplay/releases/latest/download/gameplay.apk">BAIXAR PARA ANDROID ›</a>
+
+  <img src="preview.png" alt="Telas do GamePlay" style="width:100%;height:auto;border:3px solid var(--line)">
+
+  <section class="grid" aria-label="Recursos">
+    <div class="card"><h3>AGENDE</h3><p>ESCOLHA JOGO, PLATAFORMA, DATA E HORA. PÚBLICA OU PRIVADA COM CÓDIGO.</p></div>
+    <div class="card"><h3>SQUAD</h3><p>CONVIDE AMIGOS OU QUALQUER JOGADOR PELO NICK. O ANFITRIÃO CONTROLA AS VAGAS.</p></div>
+    <div class="card"><h3>AO VIVO</h3><p>A PARTIDA VIRA "COMEÇA EM BREVE" E "EM ANDAMENTO" SOZINHA NA HOME.</p></div>
+    <div class="card"><h3>SEU AVATAR</h3><p>20 SETS DE ROUPA, 6 TONS DE PELE E 34 FUNDOS EM PIXEL ART.</p></div>
+  </section>
+
+  <section>
+    <h2>COMO INSTALAR</h2>
+    <ol>
+      <li>TOQUE EM "BAIXAR PARA ANDROID" NO CELULAR.</li>
+      <li>ABRA O ARQUIVO GAMEPLAY.APK QUE FOI BAIXADO.</li>
+      <li>SE O ANDROID PEDIR, PERMITA INSTALAR APPS DESSA FONTE.</li>
+      <li>ABRA O GAMEPLAY E CRIE SUA CONTA.</li>
+    </ol>
+    <p class="note" style="margin-top:16px">VERSÃO DE TESTE PARA ANDROID. AINDA NÃO HÁ VERSÃO PARA IPHONE.</p>
+  </section>
+
+  <footer>GAMEPLAY · PROJETO ACADÊMICO · PROGRAMAÇÃO DE APP · UCB</footer>
+</main>
+</body>
+</html>

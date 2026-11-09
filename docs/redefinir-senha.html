@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1A0F2E">
+<meta name="robots" content="noindex">
+<title>GamePlay — Nova senha</title>
+<link rel="icon" type="image/png" href="icon.png">
+<style>
+/* Mesmas medidas e cores das telas do canvas (RetroLogin / RetroSignup / janelas). */
+@font-face{font-family:'Press Start 2P';src:url('fonts/PressStart2P.ttf') format('truetype');font-display:block}
+html,body{height:100%}
+body{margin:0;font-family:'Press Start 2P',monospace;background:#1A0F2E;color:#FFF6E0;-webkit-tap-highlight-color:transparent}
+@keyframes gpBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.gp-blink{animation:gpBlink 1s steps(1) infinite}
+.gp-scan{background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 2px,transparent 2px 4px);pointer-events:none}
+.gp-btn{font-family:'Press Start 2P',monospace;cursor:pointer}
+.gp-btn:active{transform:translate(4px,4px);box-shadow:none !important}
+.gp-btn:disabled{opacity:.5;cursor:default;transform:none}
+.gp-btn:focus-visible,.gp-in:focus-visible{outline:3px dashed #3DDCFF;outline-offset:3px}
+.gp-in{font-family:'Press Start 2P',monospace;box-sizing:border-box;width:100%}
+.gp-in::placeholder{color:#8C7DB0}
+.gp-in:focus{border-color:#FFF6E0 !important}
+a{color:#3DDCFF}a:hover{color:#FFF6E0}
+[hidden]{display:none !important}
+@media (prefers-reduced-motion:reduce){.gp-blink{animation:none}}
+</style>
+</head>
+<body>
+<main style="max-width: 390px; min-height: 100%; margin: 0 auto; box-sizing: border-box; padding: 40px 28px 32px; display: flex; flex-direction: column; gap: 28px; background: #1A0F2E; position: relative; overflow: hidden">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<a href="./" style="font-size: 10px; padding: 14px 8px 14px 0; text-decoration: none">‹ GAMEPLAY</a>
+<span style="font-size: 10px; color: #A99BC7">1P</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h1 style="margin: 0; font-size: 22px; font-weight: 400; line-height: 1.5; color: #FFD23F; text-shadow: 3px 3px 0 #E0457B">NOVA SENHA</h1>
+<p id="lead" style="margin: 0; font-size: 9px; line-height: 1.9; color: #CFC3E8">VERIFICANDO O LINK<span class="gp-blink">_</span></p>
+</div>
+
+<!-- Formulário -->
+<form id="form" novalidate hidden style="display: flex; flex-direction: column; gap: 18px; margin: 0">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 10px; color: #FFF6E0">CONTA</span>
+<div id="who" style="min-height: 48px; box-sizing: border-box; padding: 14px; display: flex; align-items: center; background: #221640; color: #3DDCFF; font-size: 9px; line-height: 1.6; border: 3px dashed #6B5A94; word-break: break-all"></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="pw1" style="font-size: 10px; color: #FFF6E0">NOVA SENHA</label>
+<div style="display: flex; gap: 8px">
+<input id="pw1" class="gp-in" type="password" autocomplete="new-password" placeholder="MIN. 8 CARACTERES" style="height: 48px; padding: 0 14px; background: #2A1C47; color: #FFF6E0; font-size: 12px; border: 3px solid #6B5A94; border-radius: 0; flex-grow: 1; width: auto; min-width: 0">
+<button type="button" class="gp-btn" data-toggle="pw1" aria-label="Mostrar senha" style="height: 48px; width: 80px; padding: 0; flex-shrink: 0; background: #1A0F2E; color: #3DDCFF; font-size: 8px; border: 3px solid #6B5A94">VER</button>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="pw2" style="font-size: 10px; color: #FFF6E0">REPITA A SENHA</label>
+<div style="display: flex; gap: 8px">
+<input id="pw2" class="gp-in" type="password" autocomplete="new-password" placeholder="••••••••" style="height: 48px; padding: 0 14px; background: #2A1C47; color: #FFF6E0; font-size: 12px; border: 3px solid #6B5A94; border-radius: 0; flex-grow: 1; width: auto; min-width: 0">
+<button type="button" class="gp-btn" data-toggle="pw2" aria-label="Mostrar senha" style="height: 48px; width: 80px; padding: 0; flex-shrink: 0; background: #1A0F2E; color: #3DDCFF; font-size: 8px; border: 3px solid #6B5A94">VER</button>
+</div>
+<span id="msg" aria-live="polite" style="min-height: 12px; font-size: 7px; line-height: 1.8; color: #A99BC7"></span>
+</div>
+</form>
+
+<div id="actions" hidden style="display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: auto">
+<button id="save" type="submit" form="form" class="gp-btn" style="height: 60px; width: 100%; background: #FFD23F; color: #1A0F2E; font-size: 14px; border: 4px solid #FFF6E0; box-shadow: 6px 6px 0 #E0457B">SALVAR SENHA ›</button>
+<p style="margin: 0; font-size: 9px; color: #A99BC7">LEMBROU? <span style="color: #3DDCFF">ENTRE PELO APP</span></p>
+</div>
+
+<!-- Janela de resultado (mesmo estilo das janelas do canvas) -->
+<section id="win" role="dialog" aria-labelledby="win-title" hidden style="margin: auto 0; width: 100%; box-sizing: border-box; padding: 20px; display: flex; flex-direction: column; gap: 14px; background: #1A0F2E; border: 4px solid #FFF6E0; box-shadow: 6px 6px 0 #E0457B">
+<div style="display: flex; align-items: center; gap: 14px">
+<span id="win-icon" aria-hidden="true" style="width: 52px; height: 52px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 3px solid #FFF6E0"></span>
+<h2 id="win-title" style="margin: 0; font-size: 13px; line-height: 1.6; font-weight: 400; color: #FFD23F"></h2>
+</div>
+<p id="win-text" style="margin: 0; font-size: 7px; line-height: 1.8; color: #CFC3E8"></p>
+<ol id="win-steps" style="margin: 0; padding: 12px 12px 12px 30px; display: flex; flex-direction: column; gap: 10px; background: #221640; border: 3px solid #3A2A5C; font-size: 7px; line-height: 1.8; color: #CFC3E8"></ol>
+</section>
+
+<div class="gp-scan" style="position: absolute; inset: 0"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/dist/umd/supabase.js"></script>
+<script>
+// Mesmos valores do .env do app (a chave publishable/anon é pública).
+const SUPABASE_URL = 'https://xlatfdipzinnvadzxhct.supabase.co';
+const SUPABASE_KEY = 'COLE_AQUI_A_CHAVE_PUBLISHABLE';
+const MIN = 8;
+
+const $ = (id) => document.getElementById(id);
+const BORDER = '#6B5A94', ERR = '#FF8A8A', OK = '#7CFF6B', DIM = '#A99BC7';
+
+const ICONS = {
+  ok: ['#7CFF6B', '<svg viewBox="0 0 9 7" width="26" height="20" style="shape-rendering:crispEdges"><rect x="0" y="3" width="2" height="2" fill="#1A0F2E"/><rect x="2" y="5" width="2" height="2" fill="#1A0F2E"/><rect x="4" y="3" width="2" height="2" fill="#1A0F2E"/><rect x="6" y="1" width="2" height="2" fill="#1A0F2E"/><rect x="8" y="0" width="1" height="1" fill="#1A0F2E"/></svg>'],
+  mail: ['#3DDCFF', '<svg viewBox="0 0 10 8" width="26" height="20" style="shape-rendering:crispEdges"><rect x="0" y="0" width="10" height="8" fill="#1A0F2E"/><rect x="1" y="1" width="8" height="6" fill="#3DDCFF"/><rect x="2" y="2" width="1" height="1" fill="#1A0F2E"/><rect x="3" y="3" width="1" height="1" fill="#1A0F2E"/><rect x="4" y="4" width="2" height="1" fill="#1A0F2E"/><rect x="6" y="3" width="1" height="1" fill="#1A0F2E"/><rect x="7" y="2" width="1" height="1" fill="#1A0F2E"/></svg>'],
+  err: ['#FF8A8A', '<svg viewBox="0 0 2 8" width="8" height="26" style="shape-rendering:crispEdges"><rect x="0" y="0" width="2" height="5" fill="#1A0F2E"/><rect x="0" y="6" width="2" height="2" fill="#1A0F2E"/></svg>'],
+};
+
+function windowOf(kind, title, text, steps) {
+  $('form').hidden = true; $('actions').hidden = true; $('win').hidden = false;
+  const [bg, svg] = ICONS[kind];
+  $('win-icon').style.background = bg; $('win-icon').innerHTML = svg;
+  $('win').style.boxShadow = '6px 6px 0 ' + (kind === 'err' ? '#3A2A5C' : '#E0457B');
+  $('win-title').textContent = title;
+  $('win-text').textContent = text;
+  $('win-steps').innerHTML = '';
+  steps.forEach((s) => { const li = document.createElement('li'); li.textContent = s; $('win-steps').appendChild(li); });
+  $('win-steps').hidden = steps.length === 0;
+}
+const lead = (t, blink) => { $('lead').innerHTML = ''; $('lead').append(t); if (blink) { const c = document.createElement('span'); c.className = 'gp-blink'; c.textContent = '_'; $('lead').append(c); } };
+
+const BACK_STEPS = ['ABRA O APP GAMEPLAY', 'TOQUE EM ENTRAR', 'USE SEU E-MAIL E A SENHA NOVA'];
+const invalid = (text) => {
+  lead('O LINK NÃO FUNCIONOU.', false);
+  windowOf('err', 'LINK VENCIDO', text || 'ESTE LINK VENCEU OU JÁ FOI USADO. ELE VALE POR 1 HORA E SÓ FUNCIONA UMA VEZ.',
+    ['ABRA O APP GAMEPLAY', 'NA TELA ENTRAR, TOQUE EM ESQUECI A SENHA', 'USE O LINK DO E-MAIL MAIS RECENTE']);
+};
+
+// VER / OCULTAR
+document.querySelectorAll('[data-toggle]').forEach((b) => b.addEventListener('click', () => {
+  const input = $(b.dataset.toggle), shown = input.type === 'text';
+  input.type = shown ? 'password' : 'text';
+  b.textContent = shown ? 'VER' : 'OCULTAR';
+  b.setAttribute('aria-label', shown ? 'Mostrar senha' : 'Ocultar senha');
+}));
+
+// Retorno ao vivo, na linha embaixo dos campos
+function feedback() {
+  const a = $('pw1').value, b = $('pw2').value;
+  $('pw1').style.borderColor = BORDER; $('pw2').style.borderColor = BORDER;
+  const m = $('msg');
+  if (!a) { m.textContent = ''; return; }
+  if (a.length < MIN) { m.style.color = DIM; m.textContent = `FALTAM ${MIN - a.length} CARACTERES.`; return; }
+  if (!b) { m.style.color = DIM; m.textContent = 'AGORA REPITA A SENHA.'; return; }
+  if (a !== b) { m.style.color = DIM; m.textContent = 'AS SENHAS AINDA NÃO SÃO IGUAIS.'; return; }
+  m.style.color = OK; m.textContent = 'TUDO CERTO, PODE SALVAR!';
+}
+['pw1', 'pw2'].forEach((id) => $(id).addEventListener('input', feedback));
+const fail = (id, text) => { $(id).style.borderColor = ERR; $('msg').style.color = ERR; $('msg').textContent = text; $(id).focus(); };
+
+// O Supabase devolve os dados do link depois do "#"
+const hash = new URLSearchParams(location.hash.slice(1));
+const type = hash.get('type');
+
+if (!window.supabase || SUPABASE_KEY.startsWith('COLE_')) {
+  invalid('PÁGINA SEM CONFIGURAÇÃO. O DONO DO APP PRECISA COLAR A CHAVE DO SUPABASE NESTE ARQUIVO.');
+} else if (hash.get('error_description')) {
+  history.replaceState(null, '', location.pathname);
+  invalid();
+} else {
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { detectSessionInUrl: true, persistSession: false, autoRefreshToken: false },
+  });
+
+  sb.auth.getSession().then(({ data }) => {
+    history.replaceState(null, '', location.pathname); // tira o token da barra de endereço
+    const session = data.session;
+    if (!session) return invalid();
+    if (type === 'signup' || type === 'email_change') {
+      lead('TUDO PRONTO.', false);
+      return windowOf('mail', 'E-MAIL CONFIRMADO', 'SUA CONTA ESTÁ ATIVA. VOLTE AO APP E ENTRE COM SEU E-MAIL E SENHA.', []);
+    }
+    $('who').textContent = (session.user.email || '').toUpperCase();
+    lead('ESCOLHA UMA SENHA NOVA PARA VOLTAR AO SQUAD', true);
+    $('form').hidden = false; $('actions').hidden = false;
+    $('pw1').focus();
+  });
+
+  $('form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const a = $('pw1').value, b = $('pw2').value;
+    if (a.length < MIN) return fail('pw1', '! A SENHA PRECISA TER PELO MENOS 8 CARACTERES.');
+    if (a !== b) return fail('pw2', '! AS DUAS SENHAS NÃO SÃO IGUAIS.');
+    const btn = $('save');
+    btn.disabled = true; btn.textContent = 'SALVANDO...';
+    const { error } = await sb.auth.updateUser({ password: a });
+    if (error) {
+      btn.disabled = false; btn.textContent = 'SALVAR SENHA ›';
+      if (/expired|invalid|session|jwt/i.test(error.message)) return invalid();
+      return fail('pw1', /different|same/i.test(error.message)
+        ? '! A SENHA NOVA PRECISA SER DIFERENTE DA ANTIGA.'
+        : /weak|short|characters/i.test(error.message)
+          ? '! SENHA FRACA. USE PELO MENOS 8 CARACTERES.'
+          : '! NÃO DEU PARA SALVAR. TENTE DE NOVO.');
+    }
+    await sb.auth.signOut({ scope: 'local' }); // só esta página; o app continua como estava
+    lead('PRONTO, PLAYER 1.', false);
+    windowOf('ok', 'SENHA SALVA!', 'SUA SENHA FOI ALTERADA. AGORA É SÓ VOLTAR PARA O JOGO.', BACK_STEPS);
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "GamePlay",
+    "slug": "gameplay",
+    "scheme": "gameplay",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#1A0F2E",
+    "ios": {
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "br.ucb.otton.gameplay",
+      "adaptiveIcon": {
+        "backgroundColor": "#1A0F2E",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-notifications",
+        {
+          "color": "#FFD23F",
+          "defaultChannel": "gp_levelup",
+          "sounds": [
+            "./assets/sounds/gp_levelup.wav",
+            "./assets/sounds/gp_bip.wav",
+            "./assets/sounds/gp_power.wav"
+          ]
+        }
+      ]
+    ]
+  }
+}
